@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Java ###
+application.properties
+.properties
