@@ -3,6 +3,7 @@ package com.tasklist.spring.demo.controllers;
 import com.tasklist.spring.demo.entities.Todo;
 import com.tasklist.spring.demo.services.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class TodoController {
     }
 
     @PostMapping("/todos")
+    @ResponseStatus(HttpStatus.CREATED)
     public void addTodo(@RequestBody Todo todo) {
         todoService.addTodo(todo);
     }

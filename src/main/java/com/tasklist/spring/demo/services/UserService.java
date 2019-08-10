@@ -3,6 +3,7 @@ package com.tasklist.spring.demo.services;
 import com.tasklist.spring.demo.entities.User;
 import com.tasklist.spring.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +20,7 @@ public class UserService {
     }
 
     public User getUser(int id) {
-        // return userRepository.findById(id).orElse(null);
-        Optional<User> user = userRepository.findById(id);
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            throw new RuntimeException("Did not find user with id: " + id);
-        }
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Could not find id of: " + id));
     }
 
     public void addUser(User user) {
@@ -38,12 +33,16 @@ public class UserService {
             newUser.setId(id);
             userRepository.save(newUser);
         } else {
-            throw new RuntimeException("Did not find user with id: " + id);
+            throw new ResourceNotFoundException("Could not find id of: " + id);
         }
     }
 
     public void deleteUser(int id) {
-        userRepository.deleteById(id);
+        if (userRepository.findById(id).isPresent()) {
+            userRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException("Could not find id of: " + id);
+        }
     }
 
 

@@ -1,6 +1,8 @@
 package com.tasklist.spring.demo.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table
@@ -11,6 +13,8 @@ public class User {
     private int id;
 
     @Column
+    @NotNull
+    @Size(min=4, message="Username should have at least 4 characters")
     private String username;
 
     // If we do the below, when we do getUsers(), we'll see each user with their todos.

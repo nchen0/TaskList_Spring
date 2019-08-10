@@ -3,8 +3,10 @@ package com.tasklist.spring.demo.controllers;
 import com.tasklist.spring.demo.entities.User;
 import com.tasklist.spring.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,19 +21,21 @@ public class UserController {
         return userService.getUsers();
     }
 
+
     @GetMapping("/users/{id}")
     public User getUser(@PathVariable int id) {
         return userService.getUser(id);
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public User addUser(@Valid @RequestBody User user) {
         userService.addUser(user);
         return user;
     }
 
     @PutMapping("/users/{id}")
-    public User updateUser(@RequestBody User user, @PathVariable int id) {
+    public User updateUser(@Valid @RequestBody User user, @PathVariable int id) {
         userService.updateUser(user, id);
         return user;
     }
