@@ -4,6 +4,7 @@ import com.tasklist.spring.demo.entities.Todo;
 import com.tasklist.spring.demo.repositories.TodoRepository;
 import com.tasklist.spring.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +24,7 @@ public class TodoService {
     }
 
     public Todo getTodo(int id) {
-        Optional<Todo> todo = todoRepository.findById(id);
-        if (todo.isPresent()) {
-            return todo.get();
-        } else {
-            throw new RuntimeException("Did not find todo with id: " + id);
-        }
+        return todoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Did not find todo with id: " + id));
     }
 
     public void addTodo(Todo todo) {
@@ -42,7 +38,15 @@ public class TodoService {
             updatedTodo.setDateStarted(todo.get().getDateStarted());
             todoRepository.save(updatedTodo);
         } else {
-            throw new RuntimeException("Did not find todo with id: " + id);
+            throw new ResourceNotFoundException("Did not find todo with id: " + id);
+        }
+    }
+
+    public void deleteTodo(int id) {
+        if (todoRepository.findById(id).isPresent()) {
+            todoRepository.deleteById(id);
+        } else {
+            throw new ResourceNotFoundException("Did not find todo with id: " + id);
         }
     }
 }

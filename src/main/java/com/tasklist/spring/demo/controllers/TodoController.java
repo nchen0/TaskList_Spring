@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,13 +23,17 @@ public class TodoController {
 
     @PostMapping("/todos")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addTodo(@RequestBody Todo todo) {
+    public void addTodo(@Valid @RequestBody Todo todo) {
         todoService.addTodo(todo);
     }
 
     @PutMapping("/todos/{id}")
-    public void updateTodo(@RequestBody Todo todo, @PathVariable int id) {
+    public void updateTodo(@Valid @RequestBody Todo todo, @PathVariable int id) {
         todoService.updateTodo(todo, id);
     }
 
+    @DeleteMapping("/todos/{id}")
+    public void deleteTodo(@PathVariable int id) {
+        todoService.deleteTodo(id);
+    }
 }

@@ -3,6 +3,8 @@ package com.tasklist.spring.demo.entities;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -14,6 +16,8 @@ public class Todo {
     private int id;
 
     @Column
+    @NotNull
+    @Size(min=3, message="Task should have at least 3 characters")
     private String description;
 
     @CreationTimestamp
