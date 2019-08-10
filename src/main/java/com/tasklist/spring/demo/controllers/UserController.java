@@ -45,5 +45,11 @@ public class UserController {
         userService.deleteUser(id);
     }
 
+    // GET /users/username/{username} - Return the user based off of the user name
+    @GetMapping("/users/username/{username}")
+    public User getUserByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username);
+    }
+
 
 }

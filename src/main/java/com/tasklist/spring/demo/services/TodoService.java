@@ -1,6 +1,7 @@
 package com.tasklist.spring.demo.services;
 
 import com.tasklist.spring.demo.entities.Todo;
+import com.tasklist.spring.demo.entities.User;
 import com.tasklist.spring.demo.repositories.TodoRepository;
 import com.tasklist.spring.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,21 @@ public class TodoService {
         } else {
             throw new ResourceNotFoundException("Did not find todo with id: " + id);
         }
+    }
+
+    public List<Todo> getActiveTodos() {
+        return todoRepository.findByCompletedFalse();
+    }
+
+    public void addUserTodo(Todo todo, int userid) {
+        Optional<User> user = userRepository.findById(userid);
+        if (user.isPresent()) {
+            todo.setUser(user.get());
+            todoRepository.save(todo);
+        }
+    }
+
+    public List<Todo> getSortedTodos() {
+        return todoRepository.findAllByOrderByDescription();
     }
 }
