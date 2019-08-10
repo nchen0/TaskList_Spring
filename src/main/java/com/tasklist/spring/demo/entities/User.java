@@ -13,6 +13,10 @@ public class User {
     @Column
     private String username;
 
+    // If we do the below, when we do getUsers(), we'll see each user with their todos.
+    //    @OneToMany(fetch = FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
+    //    private List<Todo> todos;
+
     public User() {
     }
 
@@ -35,6 +39,15 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+//    public List<Todo> getTodos() {
+//        return todos;
+//    }
+//
+//    public void setTodos(List<Todo> todos) {
+//        this.todos = todos;
+//    }
+
 
     @Override
     public String toString() {

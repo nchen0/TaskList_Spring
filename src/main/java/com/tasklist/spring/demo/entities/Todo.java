@@ -24,18 +24,17 @@ public class Todo {
     @Column
     private boolean completed;
 
-    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id")
-    private Todo todo;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 
     public Todo() {
     }
 
-    public Todo(String description, Date dateStarted, boolean completed, Todo todo) {
+    public Todo(String description, Date dateStarted, boolean completed) {
         this.description = description;
         this.dateStarted = dateStarted;
         this.completed = completed;
-        this.todo = todo;
     }
 
     public int getId() {
@@ -70,12 +69,12 @@ public class Todo {
         this.completed = completed;
     }
 
-    public Todo getTodo() {
-        return todo;
+    public User getUser() {
+        return user;
     }
 
-    public void setTodo(Todo todo) {
-        this.todo = todo;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -85,7 +84,7 @@ public class Todo {
                 ", description='" + description + '\'' +
                 ", dateStarted=" + dateStarted +
                 ", completed=" + completed +
-                ", todo=" + todo +
+                ", user=" + user +
                 '}';
     }
 }

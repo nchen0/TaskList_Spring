@@ -2,6 +2,7 @@ package com.tasklist.spring.demo.services;
 
 import com.tasklist.spring.demo.entities.Todo;
 import com.tasklist.spring.demo.repositories.TodoRepository;
+import com.tasklist.spring.demo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,9 @@ public class TodoService {
 
     @Autowired
     private TodoRepository todoRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Todo> getTodos() {
         return todoRepository.findAll();
